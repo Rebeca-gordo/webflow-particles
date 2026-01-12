@@ -1,8 +1,31 @@
+console.log("particles.js loaded ✅");
+
+(function () {
+  function boot() {
+    const canvas = document.getElementById("bg");
+    if (!canvas) { console.warn("No canvas #bg"); return; }
+    if (typeof THREE === "undefined") { setTimeout(boot, 100); return; }
+    console.log("Boot ok ✅ canvas + THREE");
+
+    // ====== TU CÓDIGO ORIGINAL AQUÍ (sin <script>, sin <html>) ======
+    // IMPORTANTE: NO uses otro DOMContentLoaded dentro.
+    // Pega aquí todo tu código de partículas (scene, camera, init, animate...)
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
+  }
+})();
+
+
+
 /* =========================================================
    Particles Background – Three.js
    External JS for Webflow (GitHub + jsDelivr)
    ========================================================= */
-console.log("particles.js loaded ✅", new Date().toISOString());
+
 
 (function () {
 
