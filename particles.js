@@ -1,20 +1,38 @@
-console.log("particles.js loaded ✅");
+(() => {
+  function bootParticles() {
+    const canvas = document.getElementById("bg");
+    if (!canvas) return;
 
-(function () {
-  function boot() {
-    const canvasEl = document.getElementById("bg");
-    if (!canvasEl) {
-      console.warn("No canvas #bg");
-      return;
+    // Evita doble init si Webflow vuelve a inyectar scripts
+    if (canvas.dataset.particlesInit === "true") return;
+    canvas.dataset.particlesInit = "true";
+
+    // Helper: tamaño real del canvas/contendor (CLAVE en Webflow)
+    function getCanvasSize() {
+      const rect = canvas.getBoundingClientRect();
+      return {
+        w: Math.max(1, rect.width),
+        h: Math.max(1, rect.height),
+      };
     }
 
-    if (typeof THREE === "undefined") {
-      console.warn("THREE aún no cargó, reintentando…");
-      setTimeout(boot, 100);
-      return;
+    // Espera a que THREE exista (por si el CDN tarda)
+    function waitForThree(cb) {
+      if (typeof THREE !== "undefined") return cb();
+      let tries = 0;
+      const t = setInterval(() => {
+        tries++;
+        if (typeof THREE !== "undefined") {
+          clearInterval(t);
+          cb();
+        } else if (tries > 80) {
+          clearInterval(t);
+          console.error("[particles] THREE no cargó.");
+        }
+      }, 100);
     }
 
-    console.log("Boot ok ✅ canvas + THREE");
+    waitForThree(() => {
 
     // ================== TU CÓDIGO ORIGINAL (SIN DOMContentLoaded) ==================
 
@@ -552,8 +570,8 @@ console.log("particles.js loaded ✅");
   }
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", boot);
+    document.addEventListener("DOMContentLoaded", bootParticles);
   } else {
-    boot();
+    bootParticles();
   }
 })();
