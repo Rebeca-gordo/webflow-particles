@@ -13,9 +13,12 @@
   display: block;
 }
 
-/* opcional: si no quieres que el canvas capture el ratón
-   (si tu animación necesita clicks, quita esto) */
+/* 
+
+opcional: si no quieres que el canvas capture el ratón
+   (si tu animación necesita clicks, quita esto) 
 #bg{
   pointer-events: none;
 }
 
+*/
