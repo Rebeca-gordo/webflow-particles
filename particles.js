@@ -2,6 +2,7 @@
    Particles Background – Three.js
    External JS for Webflow (GitHub + jsDelivr)
    ========================================================= */
+console.log("particles.js loaded ✅", new Date().toISOString());
 
 (function () {
 
